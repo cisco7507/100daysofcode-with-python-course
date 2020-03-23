@@ -49,7 +49,7 @@ def get_movies_by_director():
     with open(local, 'r') as movie_data:
         for element in csv.DictReader(movie_data):
             directors[element['director_name']].append(
-                Movie(title=element['movie_title'], year=element['title_year'], score=element['imdb_score']))
+                Movie(title=element['movie_title'].strip(), year=element['title_year'], score=element['imdb_score']))
 
     return directors
 
@@ -70,7 +70,8 @@ def get_average_scores(directors):
        score in descending order. Only take directors into account
        with >= MIN_MOVIES"""
 
-    to_sort = [(director, calc_mean_score(movie_stats)) for director, movie_stats in directors.items() if
+    to_sort = [(director, calc_mean_score(movie_stats), [movie.title for movie in movie_stats]) for
+               director, movie_stats in directors.items() if
                len(movie_stats) >= MIN_MOVIES]
     k = sorted(to_sort, key=lambda x: x[1], reverse=True)
     return k
