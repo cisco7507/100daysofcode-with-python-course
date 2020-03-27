@@ -18,8 +18,9 @@ Covid_data = defaultdict(list)
 r = requests.get(BASE_URL)
 if not r:
     r = requests.get(PREVIOUS_BASE_URL)
+    print(f'Using old file with date: {report_yesterday}')
 
-with open('/tmp/'+ report, 'wb') as f:
+with open('/tmp/' + report, 'wb') as f:
     f.write(r.content)
 
 
@@ -48,9 +49,10 @@ def data_by_country(country='*', **kwargs):
 
 
 country_data = create_dict()
-data = data_by_country('Poland', **country_data)
+data = data_by_country('Canada', **country_data)
 
 for k, v in data.items():
-    for p in v:
+    s = sorted(v, key=lambda x: int(x.Confirmed), reverse=True)
+    for p in s:
         print(
             f'Country: {k}, Province: {p.Province}, City: {p.City}, Confirmed: {p.Confirmed}, Deaths: {p.Deaths}, Recovered: {p.Recovered}')
