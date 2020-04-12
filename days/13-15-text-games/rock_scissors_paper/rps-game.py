@@ -38,6 +38,9 @@ def get_player_choice():
             elif choice_dict.get(choice.lower()):
                 return choice_dict.get(choice.lower())
 
+            elif choice == '':
+                continue
+
             else:
                 print(f'Wrong entry, please select [R], [P], [S] for playing or [A] to abort and exit: ')
 
