@@ -27,7 +27,7 @@ with open('/tmp/' + report, 'wb') as f:
 def create_dict():
     with open('/tmp/' + report, 'r') as f:
         for line in csv.DictReader(f):
-            country = line['Country_Region']
+            country = line['Country_Region'].lower()
             province = line['Province_State']
             city = line['Admin2']
             confirmed = line['Confirmed']
@@ -43,16 +43,16 @@ def data_by_country(country='*', **kwargs):
         return create_dict()
     _ = {}
     for c, d in kwargs.items():
-        if c == country:
+        if c.lower() == country.lower():
             _[country] = d
     return _
 
 
 country_data = create_dict()
-data = data_by_country('Canada', **country_data)
+data = data_by_country('Cuba', **country_data)
 
 for k, v in data.items():
     s = sorted(v, key=lambda x: int(x.Confirmed), reverse=True)
     for p in s:
         print(
-            f'Country: {k}, Province: {p.Province}, City: {p.City}, Confirmed: {p.Confirmed}, Deaths: {p.Deaths}, Recovered: {p.Recovered}')
+            f'Country: {k.upper()}, Province: {p.Province}, City: {p.City}, Confirmed: {p.Confirmed}, Deaths: {p.Deaths}, Recovered: {p.Recovered}')
