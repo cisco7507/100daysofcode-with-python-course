@@ -9,6 +9,9 @@ class Roll:
             self.roll_name = roll_name.lower()
 
     def win(self):
+        """
+        :return: string of the roll defeated by a given key. i.e rock defeats scissors, so we return scissors for key = rock
+        """
         d = dict(rock='scissors', scissors='paper', paper='rock')
         return d[self.roll_name]
 
